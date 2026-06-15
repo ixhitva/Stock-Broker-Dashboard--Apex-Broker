@@ -2,6 +2,8 @@
 
 A professional-grade, multi-page stock broker web dashboard designed with a glassmorphic dark-theme UI. This application simulates a live market ticker, generates real-time news headlines that bias price drifts, supports market and limit orders, draws technical charting overlays, visualizes asset allocations, and supports concurrent multi-user testing.
 
+Check it out here: https://apexbrokerproj.netlify.app/login.html
+
 Built entirely using optimized, modern vanilla HTML5, CSS3, and JavaScript, the terminal requires no third-party compilation, external framework packages, or node installations.
 
 ## Features
