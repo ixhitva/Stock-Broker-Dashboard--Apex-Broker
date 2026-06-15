@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Apex Broker</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  
+  <nav class="navbar">
+    <div class="nav-brand">
+      APEX BROKER
+      <span class="nav-brand-sub">Terminal</span>
+    </div>
+    <div class="nav-links">
+      <a href="dashboard.html" class="nav-link active">Dashboard</a>
+      <a href="portfolio.html" class="nav-link">Portfolio</a>
+      <div class="nav-user">
+        <span class="user-badge" id="user-badge">Loading...</span>
+        <button id="nav-logout" class="btn-logout">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Scrolling Ticker Tape -->
+  <div class="ticker-tape">
+    <div class="ticker-track" id="ticker-tape-track">
+      <!-- Populated via app.js -->
+    </div>
+  </div>
+
+  <main class="container">
+    <div class="dashboard-grid">
+      
+      <!-- Left Sidebar Column -->
+      <section class="sidebar-panel">
+        
+        <!-- Cash Status Widget -->
+        <div class="glass-panel stat-widget">
+          <span class="stat-label">Available Buying Power</span>
+          <span class="stat-value" id="cash-value">$0.00</span>
+          <span class="stat-label" style="margin-top: 0.25rem; font-size: 0.7rem;">Simulated Cash Balance</span>
+        </div>
+
+        <!-- Subscription Manager -->
+        <div class="glass-panel">
+          <h3 style="margin-bottom: 1rem; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-secondary);">Subscriptions</h3>
+          <div class="subscription-list" id="subscription-manager-list">
+            <!-- Dynamically populated stock switch list -->
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Right Main Panel Column -->
+      <section class="main-panel">
+        
+        <!-- Subscribed Real-time Stock Cards Grid -->
+        <div class="stock-grid" id="stock-cards-grid">
+          <!-- Dynamically populated stock cards -->
+        </div>
+
+        <!-- Selected Stock Main Chart -->
+        <div class="glass-panel chart-container">
+          <div class="chart-header">
+            <div class="chart-title-group">
+              <h2 id="chart-stock-ticker" style="font-size: 1.6rem; font-weight: 800; color: var(--text-primary);">GOOG</h2>
+              <span id="chart-stock-name" style="color: var(--text-secondary); font-size: 0.85rem;">Alphabet Inc.</span>
+            </div>
+            <div style="text-align: right;">
+              <div id="chart-price-display" class="chart-current-price">$0.00</div>
+              <div id="chart-change-display" class="stat-change">+0.00 (0.00%)</div>
+            </div>
+          </div>
+
+          <!-- Technical Indicators Control Bar -->
+          <div class="chart-config-bar">
+            <span>Chart Overlays</span>
+            <div class="chart-indicators-list">
+              <label class="indicator-checkbox-label">
+                <input type="checkbox" id="indicator-sma">
+                <span>SMA (10)</span>
+              </label>
+              <label class="indicator-checkbox-label">
+                <input type="checkbox" id="indicator-bollinger">
+                <span>Bollinger Bands (10, 2)</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Interactive Chart SVG Wrapper -->
+          <div class="chart-svg-wrapper">
+            <svg class="chart-svg" id="interactive-chart-svg">
+              <defs>
+                <linearGradient id="chart-area-grad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" id="chart-grad-color" stop-color="var(--color-success)" stop-opacity="0.25"/>
+                  <stop offset="100%" stop-color="var(--color-success)" stop-opacity="0.0"/>
+                </linearGradient>
+              </defs>
+              <path class="main-chart-fill" fill="url(#chart-area-grad)" d=""></path>
+              <path class="main-chart-line" fill="none" stroke-width="2.5" d=""></path>
+              <line class="chart-hover-line" style="display: none;"></line>
+              <circle class="chart-hover-circle" r="5" fill="var(--text-primary)" stroke-width="2.5" stroke="var(--color-accent)" style="display: none;"></circle>
+            </svg>
+          </div>
+
+          <!-- Floating custom tooltip -->
+          <div class="chart-tooltip" id="chart-custom-tooltip">
+            <div class="chart-tooltip-time">Time</div>
+            <div class="chart-tooltip-price">$0.00</div>
+          </div>
+        </div>
+
+        <!-- Order Execution Terminal -->
+        <div class="glass-panel">
+          <h3 style="margin-bottom: 1rem; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-secondary);">Trading Console</h3>
+          
+          <div class="trade-widget-grid">
+            
+            <div class="trade-form">
+              <div class="trading-selector">
+                <button type="button" class="trade-tab-btn active buy" id="trade-tab-buy">Buy</button>
+                <button type="button" class="trade-tab-btn sell" id="trade-tab-sell">Sell</button>
+              </div>
+
+              <div class="terminal-order-type">
+                <button type="button" class="order-type-btn active" id="order-type-market">Market Order</button>
+                <button type="button" class="order-type-btn" id="order-type-limit">Limit Order</button>
+              </div>
+
+              <div class="input-group" id="limit-price-container" style="display: none;">
+                <label for="trade-limit-price-input" class="input-label">Target Trigger Price ($)</label>
+                <input type="number" id="trade-limit-price-input" class="input-field" placeholder="0.00" min="0.01" step="0.01">
+              </div>
+
+              <div class="input-group" style="margin-bottom: 0.5rem;">
+                <label for="trade-shares-input" class="input-label">Shares Quantity</label>
+                <input type="number" id="trade-shares-input" class="input-field" placeholder="0" min="1" step="1">
+              </div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; justify-content: space-between;">
+              <div style="display: flex; flex-direction: column; gap: 0.6rem;">
+                <div class="trade-summary-row">
+                  <span>Selected Asset</span>
+                  <span id="trade-stock-name" style="font-weight: 600;">GOOG</span>
+                </div>
+                <div class="trade-summary-row">
+                  <span>Current Holdings</span>
+                  <span id="trade-holdings-count" style="font-weight: 600;">0 shares</span>
+                </div>
+                <div class="trade-summary-row total">
+                  <span>Total Capital Impact</span>
+                  <span id="trade-total-cost">$0.00</span>
+                </div>
+              </div>
+
+              <button type="button" id="trade-submit-btn" class="btn-success" style="width: 100%; margin-top: 1rem; padding: 0.65rem;">
+                Place Buy Order
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Level 2 Depth and Live News side-by-side layout -->
+        <div class="dashboard-bottom-grid">
+          
+          <!-- L2 Depth Order Book -->
+          <div class="glass-panel" style="display: flex; flex-direction: column; gap: 0.75rem;">
+            <h3 style="font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-secondary);">Level 2 Market Depth</h3>
+            <div class="order-book-container">
+              <div class="order-book-header">
+                <span>Price</span>
+                <span>Size</span>
+                <span style="text-align: right;">Total</span>
+              </div>
+              <div id="order-book-depth">
+                <!-- Dynamically updated Level 2 bid/ask table -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Live Sentiment-driven News Feed -->
+          <div class="glass-panel" style="display: flex; flex-direction: column; gap: 0.75rem;">
+            <h3 style="font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-secondary);">Market Intelligence</h3>
+            <div class="news-feed-container" id="market-news-feed">
+              <!-- Dynamically populated news items -->
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Notification Toasts Wrapper -->
+  <div id="toast-container"></div>
+
+  <script src="market.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio - Apex Broker</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  
+  <nav class="navbar">
+    <div class="nav-brand">
+      APEX BROKER
+      <span class="nav-brand-sub">Terminal</span>
+    </div>
+    <div class="nav-links">
+      <a href="dashboard.html" class="nav-link">Dashboard</a>
+      <a href="portfolio.html" class="nav-link active">Portfolio</a>
+      <div class="nav-user">
+        <span class="user-badge" id="user-badge">Loading...</span>
+        <button id="nav-logout" class="btn-logout">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+    
+    <!-- Portfolio Header Statistics -->
+    <div class="portfolio-header-grid">
+      <div class="glass-panel stat-widget">
+        <span class="stat-label">Net Asset Value (NAV)</span>
+        <span class="stat-value" id="portfolio-total-value">$0.00</span>
+      </div>
+      <div class="glass-panel stat-widget">
+        <span class="stat-label">Total Cash (Buying Power)</span>
+        <span class="stat-value" id="cash-value">$0.00</span>
+      </div>
+      <div class="glass-panel stat-widget">
+        <span class="stat-label">Total Performance</span>
+        <div class="stat-change up" style="font-size: 1.6rem;">
+          <span id="portfolio-return-value">+$0.00</span>
+          <span id="portfolio-return-pct" style="font-size: 0.95rem; font-weight: 500; margin-left: 0.4rem;">(+0.00%)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Analytics Section -->
+    <div class="portfolio-analytics">
+      
+      <!-- Left Column: Holdings & Active Limit Orders -->
+      <section style="display: flex; flex-direction: column; gap: 1.5rem;">
+        
+        <!-- Holdings Table -->
+        <div class="glass-panel">
+          <h3 style="margin-bottom: 1rem; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-secondary);">Current Holdings</h3>
+          <div class="table-wrapper">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Asset</th>
+                  <th>Shares Owned</th>
+                  <th>Current Price</th>
+                  <th>Total Value</th>
+                  <th>Unrealized P&L</th>
+                </tr>
+              </thead>
+              <tbody id="holdings-table-body">
+                <!-- Populated via app.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Pending Limit Orders -->
+        <div class="glass-panel">
+          <h3 style="margin-bottom: 1rem; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-secondary);">Active Limit Orders</h3>
+          <div class="table-wrapper">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Asset</th>
+                  <th>Order Type</th>
+                  <th>Shares</th>
+                  <th>Trigger Price</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="limit-orders-table-body">
+                <!-- Populated via app.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Right Column: Donut Chart and Logs -->
+      <section style="display: flex; flex-direction: column; gap: 1.5rem;">
+        
+        <!-- Asset Allocation Card -->
+        <div class="glass-panel">
+          <h3 style="margin-bottom: 0.75rem; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-secondary); text-align: center;">Asset Allocation</h3>
+          <div class="allocation-chart-container">
+            <svg class="allocation-chart" id="allocation-donut-svg" width="160" height="160" viewBox="0 0 160 160">
+              <!-- Slices dynamically rendered as svg circles -->
+            </svg>
+            <div class="allocation-center-text">
+              <span class="allocation-label">Total Assets</span>
+              <span class="allocation-value" id="allocation-center-val">$0</span>
+            </div>
+          </div>
+          <div class="allocation-legend" id="allocation-legend">
+            <!-- Legend items -->
+          </div>
+        </div>
+
+        <!-- Transaction Log Card with CSV Export -->
+        <div class="glass-panel" style="display: flex; flex-direction: column; gap: 0.75rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem;">
+            <h3 style="font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-secondary);">Recent Activity</h3>
+            <button id="export-statement-btn" class="btn-primary" style="padding: 0.35rem 0.7rem; font-size: 0.75rem;">Export CSV</button>
+          </div>
+          <div class="transaction-list" id="transaction-log-list">
+            <!-- Transaction items -->
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Notification Toasts Wrapper -->
+  <div id="toast-container"></div>
+
+  <script src="market.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

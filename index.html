@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stock Broker Client Dashboard</title>
+  <script>
+    // Entry redirection logic - isolated by tab using sessionStorage
+    const activeUser = sessionStorage.getItem('stock_active_user');
+    if (activeUser) {
+      window.location.replace('dashboard.html');
+    } else {
+      window.location.replace('login.html');
+    }
+  </script>
+</head>
+<body style="background-color: #05060f;">
+</body>
+</html>

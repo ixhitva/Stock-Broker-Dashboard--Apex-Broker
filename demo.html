@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dual-User Demo - Stock Broker Terminal</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body style="overflow: hidden;">
+  <div class="demo-container">
+    
+    <!-- Top Demo Control Bar -->
+    <div class="demo-bar">
+      <div class="demo-title">
+        APEX BROKER
+        <span class="nav-brand-sub" style="border-color: rgba(99, 102, 241, 0.4); color: #a5b4fc;">Dual-User Simulation</span>
+      </div>
+      <div>
+        <a href="login.html" class="btn-logout" style="padding: 0.5rem 1rem; font-weight: 500;">
+          Back to Single-User Login
+        </a>
+      </div>
+    </div>
+
+    <!-- Viewport Split Wrapper -->
+    <div class="demo-viewport-wrapper">
+      
+      <!-- User A Frame -->
+      <div class="demo-pane">
+        <div class="demo-pane-header">
+          <span>Terminal Pane 1</span>
+          <span class="demo-pane-label">Account: user-a@domain.com</span>
+        </div>
+        <iframe src="dashboard.html?user=user-a@domain.com&demo=true" class="demo-iframe"></iframe>
+      </div>
+
+      <!-- User B Frame -->
+      <div class="demo-pane">
+        <div class="demo-pane-header">
+          <span>Terminal Pane 2</span>
+          <span class="demo-pane-label">Account: user-b@domain.com</span>
+        </div>
+        <iframe src="dashboard.html?user=user-b@domain.com&demo=true" class="demo-iframe"></iframe>
+      </div>
+
+    </div>
+
+  </div>
+</body>
+</html>

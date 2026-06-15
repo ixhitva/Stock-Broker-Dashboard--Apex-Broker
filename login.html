@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Stock Broker Terminal</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="login-wrapper">
+    <div class="glass-panel login-card">
+      <div class="login-header">
+        <div class="nav-brand" style="justify-content: center; font-size: 1.8rem; margin-bottom: 0.5rem;">
+          APEX BROKER
+          <span class="nav-brand-sub">Client Portal</span>
+        </div>
+        <div class="login-subtitle">Enter your email to access your trading dashboard</div>
+      </div>
+
+      <form id="login-form">
+        <div class="input-group">
+          <label for="login-email" class="input-label">Email Address</label>
+          <input type="email" id="login-email" class="input-field" placeholder="name@domain.com" required autocomplete="email">
+        </div>
+        <button type="submit" class="btn-primary" style="width: 100%; margin-top: 0.5rem;">Sign In to Terminal</button>
+      </form>
+
+      <div class="demo-shortcut-card">
+        <div class="demo-shortcut-text">
+          Want to test multi-user real-time asynchronous updates side-by-side?
+        </div>
+        <a href="demo.html" class="btn-secondary" style="display: block; font-size: 0.9rem; padding: 0.6rem;">
+          Launch Dual-User Demo Mode
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script src="market.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
